@@ -18,6 +18,8 @@ define( [
 		var canvas = null;
 		var context = null;
 		var hairs = null;
+		var stageWidth = 0;
+		var stageHeight = 0;
 
 		function init() {
 
@@ -27,8 +29,8 @@ define( [
 			canvas = document.getElementById( "canvas" );
 			context = canvas.getContext( "2d" );
 
-			canvas.width = window.innerWidth;
-			canvas.height = window.innerHeight;
+			stageWidth = canvas.width = window.innerWidth;
+			stageHeight = canvas.height = window.innerHeight;
 
 			initHair();
 
@@ -55,9 +57,10 @@ define( [
 
 		function arrangeHair() {
 
-			var center = new Point( window.innerWidth / 2 , window.innerHeight / 2 );
+			var center = new Point( stageWidth / 2 , stageHeight / 2 );
 			var amount = hairs.length;
 			var i, hair, point;
+
 
 			switch( options.type ) {
 				case "circle":
@@ -73,10 +76,10 @@ define( [
 
 				case "flat":
 
-					var total = window.innerWidth * 3 * 0.25;
-					var start = ( window.innerWidth - total ) * 0.5;
+					var total = stageWidth * 3 * 0.25;
+					var start = ( stageWidth - total ) * 0.5;
 					var step = total / amount;
-					var height = window.innerHeight * 0.5;
+					var height = stageHeight * 0.5;
 
 					for ( var i = 0; i < amount; i++ ) {
 						hair = hairs[ i ];
@@ -105,6 +108,8 @@ define( [
 
 			canvas.width = canvas.width;
 
+			if ( options.type === "face" ) drawFace();
+
 			for ( var i = 0; i < hairs.length; i++ ) {
 
 				hair = hairs[ i ];
@@ -116,6 +121,59 @@ define( [
 				hair.setForce( force );
 				hair.draw( context );
 			}
+		}
+
+		function drawFace() {
+			context.beginPath();
+			context.strokeStyle = "rgb( 0, 0, 0 )";
+			context.fillStyle = "rgb( 255, 255, 255 )";
+			context.lineWidth = 2;
+			context.arc( stageWidth / 2, stageHeight / 2, 100, 0, Math.PI, true );
+			context.closePath();
+			context.fill();
+			context.stroke();
+
+			context.beginPath();
+			context.fillStyle = "rgb( 0, 0, 0 )";
+			context.arc( stageWidth / 2 - 30, stageHeight / 2 - 20, 7, 0, Math.PI * 2 );
+			context.closePath();
+			context.fill();
+
+			context.beginPath();
+			context.fillStyle = "rgb( 0, 0, 0 )";
+			context.arc( stageWidth / 2 + 30, stageHeight / 2 - 20, 7, 0, Math.PI * 2 );
+			context.closePath();
+			context.fill();
+
+			context.beginPath();
+			context.moveTo( 0, stageHeight / 2 );
+			context.lineTo( stageWidth, stageHeight / 2 );
+			context.stroke();
+
+			drawFingers( stageWidth / 2 - 200 );
+			drawFingers( stageWidth / 2 + 200 );
+		}
+
+		function drawFingers( x ) {
+			context.fillStyle = "rgb( 255, 255, 255 )";
+
+			context.beginPath();
+			context.arc( x, stageHeight / 2, 10, 0, Math.PI * 2 );
+			context.closePath();
+			context.fill();
+			context.stroke();
+
+			context.beginPath();
+			context.arc( x + 15, stageHeight / 2, 10, 0, Math.PI * 2 );
+			context.closePath();
+			context.fill();
+			context.stroke();
+
+			context.beginPath();
+			context.arc( x + 30, stageHeight / 2, 10, 0, Math.PI * 2 );
+			context.closePath();
+			context.fill();
+			context.stroke();
 		}
 
 		init();
