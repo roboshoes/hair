@@ -1,4 +1,111 @@
-/* line 3, ../scss/main.scss */
+/* line 1, ../scss/_tag.scss */
+#tag.before {
+  width: 0;
+  left: 0;
+  padding: 15px 0 0 0;
+}
+/* line 6, ../scss/_tag.scss */
+#tag.before h1, #tag.before p, #tag.before ul, #tag.before span {
+  opacity: 0;
+  -webkit-transform: translate3d(-50px, 0, 0);
+  -moz-transform: translate3d(-50px, 0, 0);
+  -ms-transform: translate3d(-50px, 0, 0);
+  -o-transform: translate3d(-50px, 0, 0);
+  transform: translate3d(-50px, 0, 0);
+}
+
+/* line 13, ../scss/_tag.scss */
+#tag.in {
+  width: 220px;
+}
+
+/* line 17, ../scss/_tag.scss */
+#tag {
+  -webkit-transition: all 0.3s cubic-bezier(0.8, 0, 0.2, 1);
+  -moz-transition: all 0.3s cubic-bezier(0.8, 0, 0.2, 1);
+  -o-transition: all 0.3s cubic-bezier(0.8, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.8, 0, 0.2, 1);
+  position: fixed;
+  width: 180px;
+  height: 180px;
+  top: 20px;
+  left: 20px;
+  font-family: "Quicksand", sans-serif;
+  padding: 15px 0 0 20px;
+  background-color: #000;
+  color: #fff;
+}
+/* line 30, ../scss/_tag.scss */
+#tag h1, #tag p, #tag ul, #tag span {
+  opacity: 1;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  -o-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+/* line 35, ../scss/_tag.scss */
+#tag h1 {
+  -webkit-transition: all 0.3s ease-in-out;
+  -webkit-transition-delay: 0.3s;
+  -moz-transition: all 0.3s ease-in-out 0.3s;
+  -o-transition: all 0.3s ease-in-out 0.3s;
+  transition: all 0.3s ease-in-out 0.3s;
+  font-size: 30px;
+  font-weight: 400;
+  margin: 0;
+}
+/* line 42, ../scss/_tag.scss */
+#tag p {
+  -webkit-transition: all 0.3s ease-in-out;
+  -webkit-transition-delay: 0.4s;
+  -moz-transition: all 0.3s ease-in-out 0.4s;
+  -o-transition: all 0.3s ease-in-out 0.4s;
+  transition: all 0.3s ease-in-out 0.4s;
+}
+/* line 46, ../scss/_tag.scss */
+#tag ul {
+  -webkit-transition: all 0.3s ease-in-out;
+  -webkit-transition-delay: 0.6s;
+  -moz-transition: all 0.3s ease-in-out 0.6s;
+  -o-transition: all 0.3s ease-in-out 0.6s;
+  transition: all 0.3s ease-in-out 0.6s;
+}
+/* line 50, ../scss/_tag.scss */
+#tag p, #tag ul a {
+  font-size: 12px;
+  font-weight: 700;
+}
+/* line 55, ../scss/_tag.scss */
+#tag a {
+  color: white;
+  text-decoration: none;
+}
+/* line 60, ../scss/_tag.scss */
+#tag a:hover {
+  background-color: #333;
+  color: white;
+  border-bottom: 1px solid #d45656;
+}
+/* line 66, ../scss/_tag.scss */
+#tag span {
+  -webkit-transition: all 0.3s ease-in-out;
+  -webkit-transition-delay: 0.7s;
+  -moz-transition: all 0.3s ease-in-out 0.7s;
+  -o-transition: all 0.3s ease-in-out 0.7s;
+  transition: all 0.3s ease-in-out 0.7s;
+  display: inline-block;
+  margin-top: 20px;
+  font-size: 10px;
+}
+/* line 74, ../scss/_tag.scss */
+#tag ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* line 4, ../scss/main.scss */
 html, body {
   padding: 0;
   margin: 0;
@@ -7,7 +114,7 @@ html, body {
   overflow: hidden;
 }
 
-/* line 11, ../scss/main.scss */
+/* line 12, ../scss/main.scss */
 body {
   background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 100, color-stop(0%, #d45656), color-stop(100%, #c23131));
   background: -webkit-radial-gradient(#d45656, #c23131 100%);
@@ -16,7 +123,7 @@ body {
   background: radial-gradient(#d45656, #c23131 100%);
 }
 
-/* line 15, ../scss/main.scss */
+/* line 16, ../scss/main.scss */
 canvas {
   width: 100%;
   height: 100%;

@@ -22,10 +22,30 @@ module.exports = function( grunt ) {
 					debounceDelay: 150
 				}
 			}
+		},
+
+		requirejs: {
+			compile: {
+				options: {
+					baseUrl: "source/scripts",
+					out: "source/scripts/min.js",
+					name: "main",
+					include: "requireJS",
+					inlineText: false,
+
+					paths: {
+						requireJS: "libs/require/require",
+						suds: "libs/suds/source",
+						dat: "libs/dat",
+						text: "libs/require/plugin.text"
+					}
+				}
+			}
 		}
 
 	} );
 
 	grunt.loadNpmTasks( "grunt-contrib-compass" );
 	grunt.loadNpmTasks( "grunt-contrib-watch" );
+	grunt.loadNpmTasks( "grunt-contrib-requirejs" );
 };

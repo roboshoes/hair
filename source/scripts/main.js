@@ -12,6 +12,18 @@ require.config( {
 
 require( [ "hair/App" ], function( App ) {
 
+	var tag = document.getElementById( "tag" );
 	var app = new App();
+
+	setTag();
+
+	function setTag() {
+		tag.className = "before in";
+
+		setTimeout( function() {
+			tag.className = "";
+		}, 300 );
+	}
+
 
 } );

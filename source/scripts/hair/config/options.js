@@ -20,7 +20,7 @@ define( [
 	controllers.length = gui.add( options, "length", 20, 200 );
 	controllers.thickness = gui.add( options, "thickness", 4, 30 );
 	controllers.type = gui.add( options, "type", [ "face", "circle", "flat" ] );
-	controllers.suction = gui.add( options, "suction" );
+	controllers.suction = gui.add( options, "suction" ).name( "Inverse" );
 	controllers.color = gui.addColor( options, "color" );
 
 	return options;
