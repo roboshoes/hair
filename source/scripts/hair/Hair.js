@@ -32,7 +32,6 @@ define( [
 
 		this.draw = function( context ) {
 
-			var joint;
 			var length = joints.length;
 			var first = joints[ 0 ];
 
@@ -40,13 +39,12 @@ define( [
 
 				context.beginPath();
 				context.strokeStyle = "rgb( 0, 0, 0 )";
-				context.fillStyle = "rgb( 255, 255, 255 )";
+				context.fillStyle = options.color;
 				context.lineWidth = 2;
 				context.translate( origin.x, origin.y );
 
 				for ( var i = 0; i < length; i++ ) {
-					joint = joints[ i ];
-					joint.update();
+					joints[ i ].update();
 				}
 
 				context.moveTo( first.top.x, first.top.y );
@@ -57,7 +55,14 @@ define( [
 				var topBetween = Point.between( first, first.top );
 				var bottomBetween = Point.between( first, first.bottom );
 
-				context.arc( first.x, first.y, options.thickness, Math.atan2( bottomBetween.y, bottomBetween.x ), Math.atan2( topBetween.y, topBetween.x ), true );
+				context.arc(
+					first.x,
+					first.y,
+					options.thickness,
+					Math.atan2( bottomBetween.y, bottomBetween.x ),
+					Math.atan2( topBetween.y, topBetween.x ),
+					true
+				);
 
 				context.closePath();
 				context.fill();

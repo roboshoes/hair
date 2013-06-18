@@ -6,10 +6,13 @@ define( [
 
 	"hair/Hair",
 	"hair/utils/polarToCartesian",
+	"hair/utils/circleOrder",
+	"hair/utils/faceOrder",
+	"hair/utils/linear",
 	"hair/config/options",
 	"hair/config/controllers"
 
-], function( Interval, MouseHelper, Point, Hair, polarToCartesian, options, controllers ) {
+], function( Interval, MouseHelper, Point, Hair, polarToCartesian, circleOrder, faceOrder, linear, options, controllers ) {
 
 	"use strict"
 
@@ -36,6 +39,12 @@ define( [
 
 			controllers.amount.onFinishChange( initHair );
 			controllers.type.onFinishChange( arrangeHair );
+
+			window.addEventListener( "resize", function() {
+				stageWidth = canvas.width = window.innerWidth;
+				stageHeight = canvas.height = window.innerHeight;
+				arrangeHair();
+			} );
 		}
 
 		function initHair() {
@@ -60,7 +69,6 @@ define( [
 			var center = new Point( stageWidth / 2 , stageHeight / 2 );
 			var amount = hairs.length;
 			var i, hair, point;
-
 
 			switch( options.type ) {
 				case "circle":
@@ -91,10 +99,12 @@ define( [
 					break;
 
 				case "face":
+					var angle;
 
 					for ( var i = 0; i < amount; i++ ) {
 						hair = hairs[ i ];
-						point = polarToCartesian( Math.PI + Math.PI * ( i / ( amount - 1 )  ), 100 ).add( center );
+						angle = - Math.PI * 0.1 - Math.PI * 0.8 * ( i / ( amount - 1 ) );
+						point = polarToCartesian( angle, 100 ).add( center );
 
 						hair.setOrigin( point );
 					}
@@ -104,16 +114,41 @@ define( [
 		}
 
 		function onFrame() {
+
+			canvas.width = stageWidth;
+
+			var center = new Point( stageWidth / 2 , stageHeight / 2 );
+			var mouseVector = Point.between( MouseHelper, center );
+			var angle = Math.atan2( mouseVector.y, mouseVector.x );
+			var percent = ( Math.PI + angle ) / ( Math.PI * 2 );
+			var pivot, orderHairs;
+
+			if ( options.type === "face" ) {
+
+				drawFace();
+
+				if ( percent > 0.5 && percent < 1 ) {
+					percent = linear( percent, 0.5, 1 );
+					pivot = ~~( ( 1 - percent ) * ( hairs.length - 1 ) );
+				} else {
+					percent = linear( percent, 0, 0.5 );
+					pivot = ~~( percent * ( hairs.length - 1 ) );
+				}
+
+				orderHairs = faceOrder( hairs, pivot );
+
+			} else {
+
+				pivot = ~~( percent * ( hairs.length - 1 ) );
+				orderHairs = circleOrder( hairs, pivot );
+
+			}
+
 			var hair, force;
 
-			canvas.width = canvas.width;
+			for ( var i = 0, length = orderHairs.length; i < length; i++ ) {
 
-			if ( options.type === "face" ) drawFace();
-
-			for ( var i = 0; i < hairs.length; i++ ) {
-
-				hair = hairs[ i ];
-
+				hair = orderHairs[ i ];
 				force = Point.between( MouseHelper, hair.getOrigin() ).normalize().multiply( 20 );
 
 				if ( options.suction ) force.flip();
@@ -150,27 +185,30 @@ define( [
 			context.lineTo( stageWidth, stageHeight / 2 );
 			context.stroke();
 
-			drawFingers( stageWidth / 2 - 200 );
-			drawFingers( stageWidth / 2 + 200 );
+			context.fillStyle = "rgb( 255, 255, 255 )";
+			drawLeftHand();
+			drawRightHand();
 		}
 
-		function drawFingers( x ) {
-			context.fillStyle = "rgb( 255, 255, 255 )";
+		function drawLeftHand() {
+			var x = stageWidth / 2 - 200;
 
+			drawFinger( x );
+			drawFinger( x + 15 );
+			drawFinger( x + 30 );
+		}
+
+		function drawRightHand() {
+			var x = stageWidth / 2 + 200;
+
+			drawFinger( x );
+			drawFinger( x - 15 );
+			drawFinger( x - 30 );
+		}
+
+		function drawFinger( x ) {
 			context.beginPath();
 			context.arc( x, stageHeight / 2, 10, 0, Math.PI * 2 );
-			context.closePath();
-			context.fill();
-			context.stroke();
-
-			context.beginPath();
-			context.arc( x + 15, stageHeight / 2, 10, 0, Math.PI * 2 );
-			context.closePath();
-			context.fill();
-			context.stroke();
-
-			context.beginPath();
-			context.arc( x + 30, stageHeight / 2, 10, 0, Math.PI * 2 );
 			context.closePath();
 			context.fill();
 			context.stroke();

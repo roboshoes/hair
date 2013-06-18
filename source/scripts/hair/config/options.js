@@ -12,7 +12,8 @@ define( [
 		length: 50,
 		thickness: 20,
 		type: "face",
-		suction: false
+		suction: false,
+		color: "#642222"
 	};
 
 	controllers.amount = gui.add( options, "amount", 5, 40 );
@@ -20,6 +21,7 @@ define( [
 	controllers.thickness = gui.add( options, "thickness", 4, 30 );
 	controllers.type = gui.add( options, "type", [ "face", "circle", "flat" ] );
 	controllers.suction = gui.add( options, "suction" );
+	controllers.color = gui.addColor( options, "color" );
 
 	return options;
 
