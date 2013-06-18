@@ -31,7 +31,7 @@ module.exports = function( grunt ) {
 					out: "source/scripts/min.js",
 					name: "main",
 					include: "requireJS",
-					inlineText: false,
+					inlineText: true,
 
 					paths: {
 						requireJS: "libs/require/require",
